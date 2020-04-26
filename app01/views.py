@@ -7,6 +7,7 @@ import base64
 from io import BytesIO
 from django.shortcuts import render
 from django.shortcuts import HttpResponse,redirect
+from django.core.paginator import Paginator,PageNotAnInteger,InvalidPage,EmptyPage
 from app01 import models
 # Create your views here.
 
@@ -82,14 +83,24 @@ def index(request):
         )
         res = render(request,'submitsucess.html')
         username = json.dumps(username)
-        res.set_cookie("username",username)
-        res.set_cookie("userid",user_id)
+        res.set_cookie("username",username,max_age=2592000)
+        res.set_cookie("userid",user_id,max_age=2592000)
         return res
 @check_login
 def showall(request):
     if request.method == 'GET':
-        allobjs = models.info.objects.filter(status='申诉提交')[:20]
-        return render(request,'showall.html',{'allobjs':allobjs})
+        allobjs = models.info.objects.filter(status='申诉提交').order_by('id')
+        paginator = Paginator(allobjs,20)
+        pindex = request.GET.get('page')
+        try:
+            mpage = paginator.page(pindex)
+        except PageNotAnInteger:
+            mpage = paginator.page(1)
+        except EmptyPage:
+            mpage = paginator.page(paginator.num_pages)
+        except InvalidPage:
+            return HttpResponse('无该页')
+        return render(request,'showall2.html',{'mpage':mpage})
 
 @check_login
 def showimg(request,filename):
