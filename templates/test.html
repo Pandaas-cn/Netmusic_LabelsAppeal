@@ -1,0 +1,41 @@
+ <!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+
+    <script>
+        function select_change() {
+            if (document.getElementById("select_id").value == "张飞3") {
+                document.getElementById("input_text").style.display = "block";
+            } else {
+                document.getElementById("input_text").style.display = "none";
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+
+<select onchange="select_change()" id="select_id">
+
+    <option>张飞1</option>
+
+    <option>张飞2</option>
+
+    <option>张飞3</option>
+
+    <option>张飞4</option>
+
+</select>
+
+<input type="text" id="input_text" style="display: none">
+
+</body>
+
+</html>

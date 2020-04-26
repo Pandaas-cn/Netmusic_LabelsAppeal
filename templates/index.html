@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="/static/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>申诉提交</title>
+</head>
+<body>
+<script>
+        function select_change() {
+            if (document.getElementById("select_id").value == "其他") {
+                document.getElementById("input_text").style.display = "block";
+                document.getElementById('input_text').required = "true";
+            } else {
+                document.getElementById("input_text").style.display = "none";
+                document.getElementById('input_text').required = "false"
+                $("#input_text").removeAttr('required');
+            }
+        }
+        function select_change2() {
+            if (document.getElementById("select_id2").value == "其他") {
+                document.getElementById("input_text2").style.display = "block";
+                document.getElementById('input_text2').required = "true";
+
+            } else {
+                document.getElementById("input_text2").style.display = "none";
+                document.getElementById('input_text2').required = "false";
+                $("#input_text2").removeAttr('required');
+            }
+        }
+        function select_change3() {
+            if (document.getElementById("select_id3").value == "0") {
+                document.getElementById("input_text3").style.display = "block";
+                document.getElementById('input_text3').required = "true";
+            } else {
+                document.getElementById("input_text3").style.display = "none";
+                document.getElementById('input_text3').required = "false";
+                $("#input_text3").removeAttr('required');
+            }
+        }
+</script>
+<div class="container">
+<div class="page-header">
+  <h1><a href="/">云村顾问团</a>&nbsp;<small>标签申诉系统</small></h1>
+     <a href="/mypull" class="btn btn-primary">申诉进度查询</a>
+                  <a href="/admin" class="btn btn-success">管理员登录</a>
+                  <a href="/all" class="btn btn-danger">管理员审核</a>
+</div>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="InputUserid">网易云ID</label>
+    <input type="text" class="form-control" name="userid" value="{{ c_userid }}" required>
+  </div>
+  <div class="form-group">
+    <label for="InputUsername">网易云昵称</label>
+    <input type="text" class="form-control" name="username" value="{{ c_username }}" required>
+  </div>
+  <div class="form-group">
+    <label for="InputMusicLink">音乐链接</label>
+    <input type="text" class="form-control"   name="musicLink" required>
+  </div>
+  <div class="form-group">
+    <label for="InputMusicLink">系统标签为？</label>
+      <select onchange="select_change()"  id="select_id" class="form-control" name="systemLabel">
+          <option value="金属">金属</option>
+          <option value="摇滚">摇滚</option>
+          <option value="电子">电子</option>
+          <option value="民谣">民谣</option>
+          <option value="古典">古典</option>
+          <option value="爵士">爵士</option>
+          <option value="嘻哈说唱">嘻哈说唱</option>
+          <option value="古风">古风</option>
+          <option value="二次元">二次元</option>
+          <option value="轻音乐">轻音乐</option>
+          <option value="乡村">乡村</option>
+          <option value="欧美流行">欧美流行</option>
+          <option value="华语流行">华语流行</option>
+          <option value="流行">流行</option>
+          <option value="儿歌">儿歌</option>
+          <option value="儿童">儿童</option>
+          <option value="其他">其他</option>
+      </select>
+    <input type="text" class="form-control"  name="systemLabel2" id="input_text" style="display: none">
+  </div>
+<div class="form-group">
+    <label>是否为系统给定标签(即系统标签正确但是被否决)</label>
+      <select onchange="select_change3()" name="check_label" id="select_id3" class="form-control">
+          <option value="1">是</option>
+          <option value="0">否</option>
+      </select>
+</div>
+  <div class="form-group"  id="input_text3" style="display: none">
+    <label for="InputMusicLink">你认为这首歌的正确标签是？</label>
+      <select onchange="select_change2()"  id="select_id2" class="form-control" name="userLabel">
+          <option value="金属">金属</option>
+          <option value="摇滚">摇滚</option>
+          <option value="电子">电子</option>
+          <option value="民谣">民谣</option>
+          <option value="古典">古典</option>
+          <option value="爵士">爵士</option>
+          <option value="嘻哈说唱">嘻哈说唱</option>
+          <option value="古风">古风</option>
+          <option value="二次元">二次元</option>
+          <option value="轻音乐">轻音乐</option>
+          <option value="乡村">乡村</option>
+          <option value="欧美流行">欧美流行</option>
+          <option value="华语流行">华语流行</option>
+          <option value="流行">流行</option>
+          <option value="儿歌">儿歌</option>
+          <option value="儿童">儿童</option>
+          <option value="其他">其他</option>
+      </select>
+    <input type="text" class="form-control"  name="userLabel2" id="input_text2" style="display: none" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputFile">申诉截图(文件需小于2MB)</label>
+    <input type="file" id="exampleInputFile" name="imgfile" required>
+  </div>
+  <button type="submit" class="btn btn-primary">提交申诉</button>
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>查询申诉状态</title>
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+  <h1><a href="/">云村顾问团</a>&nbsp;<small>驳回申请反馈</small></h1>
+</div>
+<form class="form-inline" method="post">
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputName2">正确标签应为</label>
+    <input type="text" class="form-control" id="exampleInputName2" required name="correct_label">
+  </div>
+  <button type="submit" class="btn btn-danger">驳回申诉</button>
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>审核历史</title>
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+  <h1><a href="/">云村顾问团</a>&nbsp;<small>审核历史查询</small></h1>
+</div>
+<form class="form-inline col-md-offset-2" method="post">
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputName2">网易云ID</label>
+    <input type="text" class="form-control" id="exampleInputName2" name="userid">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputName2">开始日期</label>
+    <input type="date" class="form-control" id="exampleInputName2" name="startdate" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail2">结束日期</label>
+    <input type="date" class="form-control" id="exampleInputEmail2" name="enddate" >
+  </div>
+  <button type="submit" class="btn btn-default">查询</button>
+</form>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>网易云ID</th>
+            <th>网易云昵称</th>
+            <th>歌曲链接</th>
+            <th>是否为系统标签</th>
+            <th>系统标签</th>
+            <th>用户认为标签</th>
+            <th>申诉截图</th>
+            <th>正确标签</th>
+            <th>申诉时间</th>
+            <th>申诉状态</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for info in allobjs %}
+        <tr>
+            <th>{{ forloop.counter }}</th>
+            <th>{{ info.userid }}</th>
+            <th>{{ info.username }}</th>
+            <th><a href="{{ info.musiclink }}">{{ info.musiclink }}</a></th>
+            <th>{{ info.checklabel }}</th>
+            <th>{{ info.system_label }}</th>
+            <th>{{ info.user_label }}</th>
+            <th><a href="/static/{{ info.imgfile }}" target="_blank">查看图片</a></th>
+            <th>{{ info.correct }}</th>
+            <th>{{ info.submit_time|date:"Y-m-d" }}</th>
+            {% if info.status == '申诉通过' %}
+            <th><button class="btn btn-success">申诉通过</button></th>
+            {% elif info.status == '申诉驳回' %}
+            <th><button class="btn btn-danger">申诉驳回</button></th>
+            {% else %}
+            <th><button class="btn btn-primary">申诉提交</button></th>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+      <a href="/savetoexcel/" class="btn btn-success pull-right">保存到Excel</a>
+</div>
+</body>
+</html>
